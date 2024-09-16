@@ -41,3 +41,14 @@ Ordered
 ![https://wallpaperaccess.com/full/373797.jpg](https://wallpaperaccess.com/full/373797.jpg)
 
 Format: \![Alt text](url) 
+
+## LINKS
+
+http://brewerlab.net
+
+[Brewer Lab](http://brewerlab.net)
+
+## BACKSLASH ESCAPES 
+
+\*Literal asterisks\*
+
