@@ -14,6 +14,8 @@ __This text is bolded__
 
 _You **can** combine them_
 
+~This text is stricken~
+
 ##BLOCKQUOTES
 
 _My Poem_ by Kayla Evans 
