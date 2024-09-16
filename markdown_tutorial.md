@@ -38,6 +38,6 @@ Ordered
 
 ## IMAGES
 
-![https://wallpaperaccess.com/full/373797.jpg] (https://wallpaperaccess.com/full/373797.jpg>
+![https://wallpaperaccess.com/full/373797.jpg](https://wallpaperaccess.com/full/373797.jpg)
 
-Format: \![Alt text] (url) 
+Format: \![Alt text](url) 
