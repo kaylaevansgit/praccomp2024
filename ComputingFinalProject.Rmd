@@ -1,0 +1,121 @@
+---
+title: "ComputingProjectKJE"
+output: html_document
+date: "2024-12-02"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+
+
+```{r}
+# Load the Libraries that will be required for Analysis
+library(readxl)
+library(dplyr)
+library(ggplot2)
+library(lubridate)
+
+# Load the dataset from the computer that I am working on
+file_path <- "PlasmodiumPseudoResultsKJE.xlsx"
+data <- read_excel(file_path, sheet = "Sheet1")
+
+# Convert date columns to Date type
+data <- data %>%
+  mutate(`Collection Date` = as.Date(`Collection Date`),
+         `Date of Gel` = as.Date(`Date of Gel`))
+```
+
+
+```{r}
+# Plasmodium results, count, and proportion of plasmodium for each species 
+plasmodium_counts <- data %>%
+  filter(!is.na(`Plasmodium (+/-)`)) %>%
+  group_by(`Plasmodium (+/-)`) %>%
+  summarise(Count = n()) %>%
+  mutate(Proportion = Count / sum(Count))
+
+print(plasmodium_counts)
+```
+
+
+```{r}
+# Creating a BarPlot to Display Overall Plasmodium Detection Results
+ggplot(plasmodium_counts, aes(x = `Plasmodium (+/-)`, y = Count, fill = `Plasmodium (+/-)`)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Plasmodium Detection Results", x = "Result", y = "Count") +
+  theme_minimal()
+```
+```{r}
+# Species-Specific Analysis of Count, Porportion, and Plasmodium Results
+species_detection <- data %>%
+  filter(!is.na(Species), !is.na(`Plasmodium (+/-)`)) %>%
+  group_by(Species, `Plasmodium (+/-)`) %>%
+  summarise(Count = n()) %>%
+  group_by(Species) %>%
+  mutate(Proportion = Count / sum(Count))
+
+print(species_detection)
+```
+```{r}
+# Creating a stacked Barplot to show the number of positives and negatives for plasmodium results in each species tested
+ggplot(species_detection, aes(x = Species, y = Count, fill = `Plasmodium (+/-)`)) +
+  geom_bar(stat = "identity") +
+  labs(title = "Plasmodium Detection by Species", x = "Species", y = "Count") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+```{r}
+# Temporal Analysis
+# Sample collection trends
+collection_trends <- data %>%
+  filter(!is.na(`Collection Date`)) %>%
+  group_by(Year = year(`Collection Date`)) %>%
+  summarise(Count = n())
+
+print(collection_trends)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
